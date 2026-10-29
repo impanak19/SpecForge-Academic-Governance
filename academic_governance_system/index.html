@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpecForge | Academic Governance</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f6fb;
+      color: #172033;
+    }
+    header {
+      background: #172554;
+      color: white;
+      padding: 22px 28px;
+    }
+    header h1 { margin: 0 0 6px; }
+    header p { margin: 0; color: #cbd5e1; }
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 16px 24px;
+      background: white;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    button {
+      padding: 10px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: white;
+      cursor: pointer;
+    }
+    button:hover, button.active {
+      background: #dbeafe;
+      border-color: #2563eb;
+    }
+    main { padding: 24px; }
+    .panel {
+      max-width: 1000px;
+      margin: auto;
+      padding: 24px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 3px 12px #17255412;
+    }
+    iframe {
+      display: block;
+      width: 100%;
+      height: 75vh;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      background: white;
+    }
+    .note { color: #64748b; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SpecForge</h1>
+    <p>Academic Specification Governance System</p>
+  </header>
+
+  <nav aria-label="Application screens">
+    <button class="active" data-screen="specforge_dashboard">Dashboard</button>
+    <button data-screen="course_specification_editor">Course Editor</button>
+    <button data-screen="co_po_pso_mapping">CO–PO–PSO Mapping</button>
+    <button data-screen="validation_report">Validation</button>
+    <button data-screen="approval_workflow">Approval Workflow</button>
+    <button data-screen="export_results">Export Results</button>
+  </nav>
+
+  <main>
+    <section class="panel">
+      <h2 id="screen-title">Dashboard</h2>
+      <p class="note">Choose a section above to view its design.</p>
+      <iframe id="screen-frame" title="SpecForge screen"
+        src="./specforge_dashboard/code.html"></iframe>
+    </section>
+  </main>
+
+ 
+<script>
+  const titles = {
+    specforge_dashboard: "Dashboard",
+    course_specification_editor: "Course Specification Editor",
+    co_po_pso_mapping: "CO–PO–PSO Mapping",
+    validation_report: "Validation Report",
+    approval_workflow: "Approval Workflow",
+    export_results: "Export Results",
+    upload_course_specification: "Upload Course Specification",
+    upload_question_paper_blueprint: "Upload Question Paper Blueprint"
+  };
+
+  const paths = {
+    specforge_dashboard: "./specforge_dashboard/code.html",
+    course_specification_editor: "./course_specification_editor/code.html",
+    co_po_pso_mapping: "./co_po_pso_mapping_table/code.html",
+    validation_report: "./validation_report/code.html",
+    approval_workflow: "./approval_workflow/code.html",
+    export_results: "./export_results_engine/code.html",
+    upload_course_specification: "./upload_course_specification/code.html",
+    upload_question_paper_blueprint: "./upload_question_paper_blueprint/code.html"
+  };
+
+  const frame = document.getElementById("screen-frame");
+  const heading = document.getElementById("screen-title");
+
+  document.querySelectorAll("nav button[data-screen]").forEach(button => {
+    button.addEventListener("click", () => {
+      const folder = button.dataset.screen;
+      if (!paths[folder]) {
+        heading.textContent = "Screen not configured";
+        return;
+      }
+
+      frame.src = paths[folder];
+      heading.textContent = titles[folder] || folder;
+      document.querySelectorAll("nav button").forEach(item => {
+        item.classList.toggle("active", item === button);
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
